@@ -37,7 +37,7 @@ public class AuthorsList {
 
         while (rs.next()) {
             Author a = new Author();
-            a.id = Integer.parseInt(rs.getString(1));
+            a.id = rs.getInt(1);
             a.name = rs.getString(2);
             a.lastname = rs.getString(3);
             a.nickname = rs.getString(4);

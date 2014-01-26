@@ -79,21 +79,21 @@ public class ItemsList {
         while (rs.next()) {
             if (rs.getString(5).equals("1")) { //book
                 Book b = new Book();
-                b.id = Integer.parseInt(rs.getString(1));
+                b.id = rs.getInt(1);
                 b.name = rs.getString(2);
-                b.genre_id = Integer.parseInt(rs.getString(3));
-                b.author_id = Integer.parseInt(rs.getString(4));
+                b.genre_id = rs.getInt(3);
+                b.author_id = rs.getInt(4);
                 b.iban = rs.getString(6);
-                b.quantity = Integer.parseInt(rs.getString(8));
+                b.quantity = rs.getInt(8);
                 items.add(b);
             } else { //magazine
                 Magazine m = new Magazine();
-                m.id = Integer.parseInt(rs.getString(1));
+                m.id = rs.getInt(1);
                 m.name = rs.getString(2);
-                m.genre_id = Integer.parseInt(rs.getString(3));
-                m.author_id = Integer.parseInt(rs.getString(4));
+                m.genre_id = rs.getInt(3);
+                m.author_id = rs.getInt(4);
                 m.issue_nb = rs.getString(7);
-                m.quantity = Integer.parseInt(rs.getString(8));
+                m.quantity = rs.getInt(8);
                 items.add(m);
             }
         }

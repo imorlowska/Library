@@ -37,7 +37,7 @@ public class ClientsList {
 
         while (rs.next()) {
             Client a = new Client();
-            a.id = Integer.parseInt(rs.getString(1));
+            a.id = rs.getInt(1);
             a.name = rs.getString(2);
             a.lastname = rs.getString(3);
             a.email = rs.getString(4);

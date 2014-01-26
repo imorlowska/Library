@@ -36,7 +36,7 @@ public class GenresList {
 
         while (rs.next()) {
             Genre p = new Genre();
-            p.id = Integer.parseInt(rs.getString(1));
+            p.id = rs.getInt(1);
             p.name = rs.getString(2);
             genres.add(p);
         }
