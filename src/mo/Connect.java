@@ -6,7 +6,6 @@
 
 package mo;
 
-import com.mysql.jdbc.Driver;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,15 +17,10 @@ import java.sql.Statement;
  * @author Izabela
  */
 public class Connect {
-    public Connect() throws SQLException{
-        makeConnection();
-    } 
-
     private Connection koneksi;  
 
      public  Connection makeConnection() throws SQLException {
         if (koneksi == null) {
-             new Driver();
             // buat koneksi
              koneksi = DriverManager.getConnection(
                        "jdbc:mysql://localhost/mo",
