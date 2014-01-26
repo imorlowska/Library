@@ -1,7 +1,8 @@
 package mo;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
@@ -23,15 +24,29 @@ public class Management {
         itemsList.load(connect);
     }
 
+    private static boolean login() throws IOException, SQLException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Provide login: ");
+        String loginname = br.readLine();
+        System.out.println("Provide password: ");
+        String pass = br.readLine();
+        try {
+            Robot robbie = new Robot();
+            robbie.keyPress(17); // Holds CTRL key.
+            robbie.keyPress(76); // Holds L key.
+            robbie.keyRelease(17); // Releases CTRL key.
+            robbie.keyRelease(76); // Releases L key.
+        } catch (AWTException ex) {
+            System.err.println("Robot Failure. Cannot clear screen.");
+        }
+        return EmployeeVerificator.verify(loginname, pass, connect);
+    }
+
     public static void main(String args[]) throws IOException {
         try {
             connect = new Connect();
-            System.out.println("Connection established. \nPlease provide login:");
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String loginname = br.readLine();
-            System.out.println("Provide password: ");
-            String pass = br.readLine();
-            if (EmployeeVerificator.verify(loginname, pass, connect)) {
+            System.out.println("Connection established.");
+            if (login()) {
                 System.out.println("Logged in");
                 load();
             } else {
