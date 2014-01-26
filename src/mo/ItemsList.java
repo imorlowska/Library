@@ -71,6 +71,58 @@ public class ItemsList {
         return found;
     }
     
+    public void addBook(String name, int genre_id, int author_id, String iban, int quantity, Connect connect) 
+            throws SQLException, InterruptedException {
+        Book b = new Book();
+        b.id = -1;
+        b.name = name;
+        b.genre_id = genre_id;
+        b.author_id = author_id;
+        b.iban = iban;
+        b.quantity = quantity;
+        
+        connect.executeInsert("insert into items(name, genre_id, author_id, type_id, iban, quantity) values (" + 
+                "'" + name + "', '" + genre_id + "', '" + author_id+ "', '1', '" + iban + "', '" + quantity + "');");
+         ResultSet rs = connect.executeQuery("select id, name, iban from items;");
+        while(rs.next()) {
+            if (rs.getString(2).equals(name) && rs.getString(3).equals(iban)) {
+                b.id = rs.getInt(1);
+                items.add(b);
+                System.out.println("Successfully added new book, id = " + b.id);
+                break;
+            }
+        }
+        if (b.id == -1) {
+            System.out.println("Failed to add new book.");
+        }
+    }
+    
+    public void addMagazine(String name, int genre_id, int author_id, String issue_nb, int quantity, Connect connect) 
+            throws SQLException, InterruptedException {
+        Magazine b = new Magazine();
+        b.id = -1;
+        b.name = name;
+        b.genre_id = genre_id;
+        b.author_id = author_id;
+        b.issue_nb = issue_nb;
+        b.quantity = quantity;
+        
+        connect.executeInsert("insert into items(name, genre_id, author_id, type_id, issue_nb, quantity) values (" + 
+                "'" + name + "', '" + genre_id + "', '" + author_id+ "', '1', '" + issue_nb + "', '" + quantity + "');");
+         ResultSet rs = connect.executeQuery("select id, name, issue_nb from items;");
+        while(rs.next()) {
+            if (rs.getString(2).equals(name) && rs.getString(3).equals(issue_nb)) {
+                b.id = rs.getInt(1);
+                items.add(b);
+                System.out.println("Successfully added new magazine, id = " + b.id);
+                break;
+            }
+        }
+        if (b.id == -1) {
+            System.out.println("Failed to add new magazine.");
+        }
+    }
+    
     public void load(Connect connect) throws SQLException {
         items.clear();
         ResultSet rs = connect.executeQuery(
