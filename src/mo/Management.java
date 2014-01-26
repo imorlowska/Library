@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author Ferdiansyah Dolot
+ * @author Izabela Orlowska
  */
 public class Management {
 
@@ -346,9 +346,59 @@ public class Management {
         }
     }
 
-    private static void addNewOrder() {
+    private static void addNewOrder() throws IOException, SQLException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Provide client's id: ");
+        int clients_id = Integer.parseInt(br.readLine());
+        System.out.println("Provide item's id: ");
+        int items_id = Integer.parseInt(br.readLine());
+        System.out.println("Provide lend date: ");
+        String lend_date = br.readLine();
+        Client c = null;
+        for (Client cl : clientsList.clients) {
+            if (cl.id == clients_id) {
+                c = cl;
+            }
+        }
+        if (c == null) {
+            System.out.println("Cannot find client.");
+        } else if (c.banned) {
+            System.out.println("User is banned and cannot lend items!");
+        } else {
+            Item it = null;
+            for (Item itm : itemsList.items) {
+                if (itm.id == items_id) {
+                    it = itm;
+                }
+            }
+            if (it == null) {
+                System.out.println("Cannot find item.");
+            } else if (it.quantity <= 0) {
+                System.out.println("No copies of this item available at the moment.");
+            } else {
+                ordersList.addOrder(items_id, clients_id, lend_date, connect);
+            }
+        }
     }
 
-    private static void finalizeOrder() {
+    private static void finalizeOrder() throws IOException, SQLException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Provide order's id: ");
+        int orders_id = Integer.parseInt(br.readLine());
+        System.out.println("Provide return date: ");
+        String return_date = br.readLine();
+        Order o = null;
+        for (Order ord : ordersList.orders) {
+            if (ord.id == orders_id) {
+                o = ord;
+            }
+        }
+        if (o == null) {
+            System.out.println("Cannot find order.");
+        } else if (o.return_date != null || o.return_date.equals("") || o.return_date.equals("null")) {
+            System.out.println("Item already returned");
+        } else {
+            ordersList.returnItem(o, return_date, connect);
+        }
     }
 }
