@@ -14,20 +14,24 @@ import java.sql.*;
 public class Management {
 
     private static Connect connect;
+    private static String loginname;
     private static GenresList genresList;
     private static ItemsList itemsList;
+    private static AuthorsList authorsList;
 
     private static void load() throws SQLException {
         genresList = new GenresList();
         genresList.load(connect);
         itemsList = new ItemsList();
         itemsList.load(connect);
+        authorsList = new AuthorsList();
+        authorsList.load(connect);
     }
 
     private static boolean login() throws IOException, SQLException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Provide login: ");
-        String loginname = br.readLine();
+        loginname = br.readLine();
         System.out.println("Provide password: ");
         String pass = br.readLine();
         try {
@@ -46,12 +50,12 @@ public class Management {
         try {
             connect = new Connect();
             System.out.println("Connection established.");
-            if (login()) {
+            //if (login()) {
                 System.out.println("Logged in");
                 load();
-            } else {
-                System.out.println("Login failed. Shutting down.");
-            }
+            //} else {
+            //    System.out.println("Login failed. Shutting down.");
+            //}
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Connection Failure. Shutting down.");
