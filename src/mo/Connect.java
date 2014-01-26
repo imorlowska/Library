@@ -36,10 +36,9 @@ public class Connect {
         return statement.executeQuery(command);
     }
      
-     public void executeInsert(String command) throws SQLException, InterruptedException {
+     public void executeUpdate(String command) throws SQLException, InterruptedException {
          Statement statement = makeConnection().createStatement();
          statement.executeUpdate(command);
-         Thread.sleep(1000);
          statement.close();
      }
 }

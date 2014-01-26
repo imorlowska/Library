@@ -39,7 +39,7 @@ public class AuthorsList {
         a.lastname = lastname;
         a.nickname = nickname;
         
-        connect.executeInsert("insert into authors(name, lastname, nickname) values (" + 
+        connect.executeUpdate("insert into authors(name, lastname, nickname) values (" + 
                 "'" + name + "', '" + lastname + "', '" + nickname+ "');");
          ResultSet rs = connect.executeQuery("select id, name, lastname, nickname from authors;");
         while(rs.next()) {

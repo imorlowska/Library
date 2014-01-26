@@ -61,6 +61,21 @@ public class OrdersList {
         return found;
     }
     
+    public void returnItem(Order o, String return_date, Connect connect) throws SQLException, InterruptedException {
+        connect.executeUpdate("update table orders set return_date = '" + return_date + "' where id = '"
+                + o.id + "';");
+        ResultSet rs = connect.executeQuery("select id, return_date from orders where id = '" + o.id + "';");
+        while(rs.next()) {
+            if (rs.getInt(1) == o.id && rs.getString(2).equals(return_date)) {
+                o.return_date = return_date;
+                System.out.println("Successfully returned item, id = " + o.id);
+            }
+        }
+        if (!o.return_date.equals(return_date)) {
+            System.out.println("Failed to return item");
+        }
+    }
+    
     public void addOrder(int item_id, int client_id, String lend_date, Connect connect) 
             throws SQLException, InterruptedException {
         Order o = new Order();
@@ -70,7 +85,7 @@ public class OrdersList {
         o.lend_date = lend_date;
         o.return_date = null;
         
-        connect.executeInsert("insert into orders(item_id, client_id, lend_date) values (" + 
+        connect.executeUpdate("insert into orders(item_id, client_id, lend_date) values (" + 
                 "'" + item_id + "', '" + client_id + "', '" + lend_date + "');");
          ResultSet rs = connect.executeQuery("select id, item_id, client_id, lend_date from orders;");
         while(rs.next()) {

@@ -39,7 +39,7 @@ public class ClientsList {
         c.lastname = surname;
         c.email = email;
         
-        connect.executeInsert("insert into clients(name, surname, email) values (" + 
+        connect.executeUpdate("insert into clients(name, surname, email) values (" + 
                 "'" + name + "', '" + surname + "', '" + email+ "');");
         ResultSet rs = connect.executeQuery("select id, name, surname, email from clients;");
         while(rs.next()) {

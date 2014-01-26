@@ -81,7 +81,7 @@ public class ItemsList {
         b.iban = iban;
         b.quantity = quantity;
         
-        connect.executeInsert("insert into items(name, genre_id, author_id, type_id, iban, quantity) values (" + 
+        connect.executeUpdate("insert into items(name, genre_id, author_id, type_id, iban, quantity) values (" + 
                 "'" + name + "', '" + genre_id + "', '" + author_id+ "', '1', '" + iban + "', '" + quantity + "');");
          ResultSet rs = connect.executeQuery("select id, name, iban from items;");
         while(rs.next()) {
@@ -107,7 +107,7 @@ public class ItemsList {
         b.issue_nb = issue_nb;
         b.quantity = quantity;
         
-        connect.executeInsert("insert into items(name, genre_id, author_id, type_id, issue_nb, quantity) values (" + 
+        connect.executeUpdate("insert into items(name, genre_id, author_id, type_id, issue_nb, quantity) values (" + 
                 "'" + name + "', '" + genre_id + "', '" + author_id+ "', '1', '" + issue_nb + "', '" + quantity + "');");
          ResultSet rs = connect.executeQuery("select id, name, issue_nb from items;");
         while(rs.next()) {
