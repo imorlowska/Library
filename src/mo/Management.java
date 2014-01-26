@@ -18,6 +18,7 @@ public class Management {
     private static GenresList genresList;
     private static ItemsList itemsList;
     private static AuthorsList authorsList;
+    private static ClientsList clientsList;
 
     private static void load() throws SQLException {
         genresList = new GenresList();
@@ -26,6 +27,8 @@ public class Management {
         itemsList.load(connect);
         authorsList = new AuthorsList();
         authorsList.load(connect);
+        clientsList = new ClientsList();
+        clientsList.load(connect);
     }
 
     private static boolean login() throws IOException, SQLException {
