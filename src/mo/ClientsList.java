@@ -31,6 +31,30 @@ public class ClientsList {
         return null;
     }
     
+    public void addClient(String name, String surname, String email, Connect connect) 
+            throws SQLException, InterruptedException {
+        Client c = new Client();
+        c.id = -1;
+        c.name = name;
+        c.lastname = surname;
+        c.email = email;
+        
+        connect.executeInsert("insert into clients(name, surname, email) values (" + 
+                "'" + name + "', '" + surname + "', '" + email+ "');");
+        ResultSet rs = connect.executeQuery("select id, name, surname, email from clients;");
+        while(rs.next()) {
+            if (rs.getString(2).equals(name) && rs.getString(3).equals(surname)) {
+                c.id = rs.getInt(1);
+                clients.add(c);
+                System.out.println("Successfully added new client, id = " + c.id);
+                break;
+            }
+        }
+        if (c.id == -1) {
+            System.out.println("Failed to add new client.");
+        }
+    }
+    
     public void load(Connect connect) throws SQLException {
         clients.clear();
         ResultSet rs = connect.executeQuery("select id, name, surname, email, banned from clients;");
