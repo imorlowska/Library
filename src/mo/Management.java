@@ -209,6 +209,7 @@ public class Management {
         } else {
             System.out.println("Wrong command.");
         }
+        System.out.println();
     }
 
     private static void showItemsDetails() throws IOException {
@@ -226,13 +227,13 @@ public class Management {
             System.out.println("name = " + it.name);
             for (Author a : authorsList.authors) {
                 if (a.id == it.author_id) {
-                    System.out.println("author = " + a.name + (it instanceof Book? a.lastname: ""));
+                    System.out.println("author = " + a.name + (it instanceof Book ? a.lastname : ""));
                 }
             }
             if (it instanceof Book) {
-                System.out.println("iban = " + ((Book)it).iban);
+                System.out.println("iban = " + ((Book) it).iban);
             } else {
-                System.out.println("issue nb = " + ((Magazine)it).issue_nb);
+                System.out.println("issue nb = " + ((Magazine) it).issue_nb);
             }
             System.out.println("Currently held by: ");
             List<Integer> client_ids = new ArrayList();
@@ -250,7 +251,7 @@ public class Management {
                     }
                 }
             }
-            
+
         } else {
             System.out.println("Item not found.");
         }
@@ -292,15 +293,57 @@ public class Management {
     }
 
     private static void seeAuthorsList() {
+        System.out.println("Authors list:\nid\t\tname\t\tlastname\t\nickname");
+        for (Author a : authorsList.authors) {
+            System.out.println(a.id + "\t\t" + a.name + "\t\t" + a.lastname + "\t\t" + a.nickname);
+        }
     }
 
-    private static void seeAuthorsDetails() {
+    private static void seeAuthorsDetails() throws IOException {
+        System.out.println("Provide author's id: ");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int i = Integer.parseInt(br.readLine());
+        Author a = null;
+        for (Author f : authorsList.authors) {
+            if (f.id == i) {
+                a = f;
+            }
+        }
+        if (a == null) {
+            System.out.println("Author not found.");
+        } else {
+            System.out.println("id = " + a.id);
+            System.out.println("name = " + a.name);
+            System.out.println("lastname = " + a.lastname);
+            System.out.println("nickname = " + a.nickname);
+            System.out.println();
+            System.out.println("Author of: ");
+            for (Item it : itemsList.items) {
+                if (it.author_id == a.id) {
+                    System.out.println(a.name);
+                }
+            }
+            System.out.println("End.");
+        }
+        System.out.println();
     }
 
-    private static void addNewAuthor() {
+    private static void addNewAuthor() throws IOException, SQLException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Provide authors's first name: ");
+        String name = br.readLine();
+        System.out.println("Provide authors's last name: ");
+        String lastname = br.readLine();
+        System.out.println("Provide authors's nickname: ");
+        String nick = br.readLine();
+        authorsList.addAuthor(name, lastname, nick, connect);
     }
 
     private static void showOrdersList() {
+        System.out.println("Orders list:\nid\t\tclient id\t\titem id\t\tlend date\t\treturn date");
+        for (Order o : ordersList.orders) {
+            System.out.println(o.id + "\t\t" + o.client_id + "\t\t" + o.item_id + "\t\t" + o.lend_date + "\t\t" + o.return_date);
+        }
     }
 
     private static void addNewOrder() {
