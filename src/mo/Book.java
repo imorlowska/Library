@@ -11,23 +11,5 @@ package mo;
  * @author Izabela
  */
 public class Book extends Item {
-    private String iban;
-    
-    public static Book createBook() {
-        return new Book();
-    }
-
-    /**
-     * @return the iban
-     */
-    public String getIban() {
-        return iban;
-    }
-
-    /**
-     * @param iban the iban to set
-     */
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
+    public String iban;
 }

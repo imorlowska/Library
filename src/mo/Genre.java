@@ -3,17 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package mo;
 
 /**
  *
  * @author Izabela
  */
-abstract class Item {
+public class Genre {
     public int id;
     public String name;
-    public int genre_id;
-    public int author_id;
-    public int quantity;
 }

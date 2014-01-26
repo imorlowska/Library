@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package mo;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,47 +15,36 @@ import java.util.List;
  * @author Izabela
  */
 public class GenresList {
-    private List<Pair> genres;
-    
-    private class Pair {
-        public int id;
-        public String name;
-    }
-    
+    private List<Genre> genres;
+
     public GenresList() {
         genres = new ArrayList();
     }
-    
-    public int getId(String name) {
-        for (Pair p : genres) {
+
+    public Genre findByName(String name) {
+        for (Genre p : genres) {
             if (p.name.equalsIgnoreCase(name)) {
-                return p.id;
-            }
-        }
-        return -1;
-    }
-    
-    //@Nullable
-    public  String getName(int id) {
-        for (Pair p : genres) {
-            if (p.id == id) {
-                return p.name;
+                return p;
             }
         }
         return null;
     }
-    
-    /**
-     *  
-     * @param connect
-     * @throws java.sql.SQLException
-     */
+
+    public Genre findById(int id) {
+        for (Genre p : genres) {
+            if (p.id == id) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void load(Connect connect) throws SQLException {
         genres.clear();
-        ResultSet rs = connect.execute("select * from genres;");
+        ResultSet rs = connect.execute("select id, name from genres;");
 
         while (rs.next()) {
-            Pair p = new Pair();
+            Genre p = new Genre();
             p.id = Integer.parseInt(rs.getString(1));
             p.name = rs.getString(2);
             genres.add(p);

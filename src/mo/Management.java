@@ -11,10 +11,14 @@ public class Management {
 
     private static Connect connect;
     private static GenresList genresList;
+    private static ItemsList itemsList;
 
     private static void load() throws SQLException {
         genresList = new GenresList();
         genresList.load(connect);
+        itemsList = new ItemsList();
+        itemsList.load(connect);
+        
     }
 
     public static void main(String args[]) throws IOException {
