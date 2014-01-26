@@ -53,14 +53,35 @@ public class Management {
         return EmployeeVerificator.verify(loginname, pass, connect);
     }
 
-    public static void main(String args[]) throws IOException, InterruptedException {
+    public static void manage() throws IOException {
+        System.out.println("What would you like to do?\n"
+                + "1\t See clients list\n"
+                + "2\t See client's details\n"
+                + "3\t Add new client\n"
+                + "4\t See items list\n"
+                + "5\t See item's details\n"
+                + "6\t Add new item\n"
+                + "7\t See authors list\n"
+                + "8\t See author's details\n"
+                + "9\t Add new author\n"
+                + "10\t Show orders list\n"
+                + "11\t Add new order\n"
+                + "12\t Finalize an order\n");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int i = Integer.parseInt(br.readLine());
+
+    }
+
+    public static void main(String args[]) throws IOException {
         try {
             connect = new Connect();
             System.out.println("Connection established.");
-            //if (login()) {
-            System.out.println("Logged in");
-            load();
-            //to stuff
+            if (login()) {
+                System.out.println("Logged in");
+                load();
+
+                manage();
+            }
             connect.makeConnection().commit();
             connect.makeConnection().close();
         } catch (SQLException e) {

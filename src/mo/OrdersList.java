@@ -64,6 +64,7 @@ public class OrdersList {
     public void returnItem(Order o, String return_date, Connect connect) throws SQLException, InterruptedException {
         connect.executeUpdate("update table orders set return_date = '" + return_date + "' where id = '"
                 + o.id + "';");
+        connect.executeUpdate("update table items set quantity = quantity + 1 where item_id = '" + o.item_id + "';");
         ResultSet rs = connect.executeQuery("select id, return_date from orders where id = '" + o.id + "';");
         while(rs.next()) {
             if (rs.getInt(1) == o.id && rs.getString(2).equals(return_date)) {
@@ -87,6 +88,7 @@ public class OrdersList {
         
         connect.executeUpdate("insert into orders(item_id, client_id, lend_date) values (" + 
                 "'" + item_id + "', '" + client_id + "', '" + lend_date + "');");
+        connect.executeUpdate("update table items set quantity = quantity + 1 where item_id = '" + o.item_id + "';");
          ResultSet rs = connect.executeQuery("select id, item_id, client_id, lend_date from orders;");
         while(rs.next()) {
             if (rs.getInt(2) == item_id && rs.getInt(3) == client_id && rs.getString(4).equals(lend_date)) {
