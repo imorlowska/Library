@@ -176,7 +176,6 @@ public class Management {
     }
 
     private static void addNewClient() throws IOException, SQLException, InterruptedException {
-        Client c = new Client();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Provide client's first name: ");
         String name = br.readLine();
@@ -255,9 +254,41 @@ public class Management {
         } else {
             System.out.println("Item not found.");
         }
+        System.out.println();
     }
 
-    private static void addNewItem() {
+    private static void addNewItem() throws IOException, SQLException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("1 - Book\n2 - Magazine");
+        int i = Integer.parseInt(br.readLine());
+        if (i == 1) {
+            System.out.println("Provide book's name: ");
+            String name = br.readLine();
+            System.out.println("Provide author's id: ");
+            int author_id = Integer.parseInt(br.readLine());
+            System.out.println("Provide genre's id: ");
+            int genre_id = Integer.parseInt(br.readLine());
+            System.out.println("Provide iban: ");
+            String iban = br.readLine();
+            System.out.println("Provide quantity: ");
+            int quantity = Integer.parseInt(br.readLine());
+            itemsList.addBook(name, genre_id, author_id, iban, quantity, connect);
+        } else if (i == 2) {
+            System.out.println("Provide book's name: ");
+            String name = br.readLine();
+            System.out.println("Provide author's id: ");
+            int author_id = Integer.parseInt(br.readLine());
+            System.out.println("Provide genre's id: ");
+            int genre_id = Integer.parseInt(br.readLine());
+            System.out.println("Provide issue nb: ");
+            String issue = br.readLine();
+            System.out.println("Provide quantity: ");
+            int quantity = Integer.parseInt(br.readLine());
+            itemsList.addMagazine(name, genre_id, author_id, issue, quantity, connect);
+        } else {
+            System.out.println("Wrong command.");
+        }
+        System.out.println();
     }
 
     private static void seeAuthorsList() {
