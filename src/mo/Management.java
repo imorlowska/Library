@@ -19,6 +19,7 @@ public class Management {
     private static ItemsList itemsList;
     private static AuthorsList authorsList;
     private static ClientsList clientsList;
+    private static OrdersList ordersList;
 
     private static void load() throws SQLException {
         genresList = new GenresList();
@@ -29,6 +30,9 @@ public class Management {
         authorsList.load(connect);
         clientsList = new ClientsList();
         clientsList.load(connect);
+        ordersList = new OrdersList();
+        ordersList.load(connect);
+        System.out.println("Loading complete.\n");
     }
 
     private static boolean login() throws IOException, SQLException {
