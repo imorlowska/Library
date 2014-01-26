@@ -9,6 +9,7 @@ package mo;
 import com.mysql.jdbc.Driver;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -35,8 +36,8 @@ public class Connect {
          return koneksi;
      }  
      
-     public void execute(String command)throws SQLException{
+     public ResultSet execute(String command)throws SQLException{
         Statement statement = makeConnection().createStatement();
-        statement.execute(command);
+        return statement.executeQuery(command);
     }
 }
