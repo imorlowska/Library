@@ -21,15 +21,6 @@ public class GenresList {
         genres = new ArrayList();
     }
 
-    public Genre findByName(String name) {
-        for (Genre p : genres) {
-            if (p.name.equalsIgnoreCase(name)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
     public Genre findById(int id) {
         for (Genre p : genres) {
             if (p.id == id) {

@@ -22,6 +22,55 @@ public class ItemsList {
         items = new ArrayList();
     }
     
+    public Item findById(int id) {
+        for (Item i : items) {
+            if (i.id == id) {
+                return i;
+            }
+        }
+        return null;
+    }
+    
+    public List<Item> findByGenreId(int id) {
+        List<Item> found = new ArrayList();
+        for (Item i : items) {
+            if (i.genre_id == id) {
+                found.add(i);
+            }
+        }
+        return found;
+    }
+    
+    public List<Item> findByAuthorId(int id) {
+        List<Item> found = new ArrayList();
+        for (Item i : items) {
+            if (i.author_id == id) {
+                found.add(i);
+            }
+        }
+        return found;
+    }
+    
+    public List<Book> findAllBooks() {
+        List<Book> found = new ArrayList();
+        for (Item i : items) {
+            if (i instanceof Book) {
+                found.add((Book)i);
+            }
+        }
+        return found;
+    }
+    
+    public List<Magazine> findAllMagazines() {
+        List<Magazine> found = new ArrayList();
+        for (Item i : items) {
+            if (i instanceof Magazine) {
+                found.add((Magazine)i);
+            }
+        }
+        return found;
+    }
+    
     public void load(Connect connect) throws SQLException {
         items.clear();
         ResultSet rs = connect.execute(
