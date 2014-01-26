@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class EmployeeVerificator {
     
     public static boolean verify(String login, String password, Connect connect) throws SQLException {
-        ResultSet rs = connect.execute("select login, password from employees;");
+        ResultSet rs = connect.executeQuery("select login, password from employees;");
         while (rs.next()) {
             if (rs.getString(1).equals(login) && rs.getString(2).equals(password)) {
                 return true;

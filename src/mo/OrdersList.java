@@ -63,7 +63,7 @@ public class OrdersList {
 
     public void load(Connect connect) throws SQLException {
         orders.clear();
-        ResultSet rs = connect.execute(
+        ResultSet rs = connect.executeQuery(
                 "select id, item_id, client_id, lend_date, return_date from orders;");
 
         while (rs.next()) {

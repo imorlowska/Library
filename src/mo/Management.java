@@ -53,16 +53,16 @@ public class Management {
         return EmployeeVerificator.verify(loginname, pass, connect);
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, InterruptedException {
         try {
             connect = new Connect();
             System.out.println("Connection established.");
             //if (login()) {
-                System.out.println("Logged in");
-                load();
-            //} else {
-            //    System.out.println("Login failed. Shutting down.");
-            //}
+            System.out.println("Logged in");
+            load();
+            //to stuff
+            connect.makeConnection().commit();
+            connect.makeConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Connection Failure. Shutting down.");

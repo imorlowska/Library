@@ -31,9 +31,33 @@ public class AuthorsList {
         return null;
     }
     
+    public void addAuthor(String name, String lastname, String nickname, Connect connect) 
+            throws SQLException, InterruptedException {
+        Author a = new Author();
+        a.id = -1;
+        a.name = name;
+        a.lastname = lastname;
+        a.nickname = nickname;
+        
+        connect.executeInsert("insert into authors(name, lastname, nickname) values (" + 
+                "'" + name + "', '" + lastname + "', '" + nickname+ "');");
+         ResultSet rs = connect.executeQuery("select id, name, lastname, nickname from authors;");
+        while(rs.next()) {
+            if (rs.getString(2).equals(name) && rs.getString(3).equals(lastname)) {
+                a.id = rs.getInt(1);
+                authors.add(a);
+                System.out.println("Successfully added new author, id = " + a.id);
+                break;
+            }
+        }
+        if (a.id == -1) {
+            System.out.println("Failed to add new author.");
+        }
+    }
+    
     public void load(Connect connect) throws SQLException {
         authors.clear();
-        ResultSet rs = connect.execute("select id, name, lastname, nickname from authors;");
+        ResultSet rs = connect.executeQuery("select id, name, lastname, nickname from authors;");
 
         while (rs.next()) {
             Author a = new Author();

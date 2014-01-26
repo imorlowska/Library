@@ -33,7 +33,7 @@ public class ClientsList {
     
     public void load(Connect connect) throws SQLException {
         clients.clear();
-        ResultSet rs = connect.execute("select id, name, surname, email, banned from clients;");
+        ResultSet rs = connect.executeQuery("select id, name, surname, email, banned from clients;");
 
         while (rs.next()) {
             Client a = new Client();

@@ -73,7 +73,7 @@ public class ItemsList {
     
     public void load(Connect connect) throws SQLException {
         items.clear();
-        ResultSet rs = connect.execute(
+        ResultSet rs = connect.executeQuery(
                 "select id, name, genre_id, author_id, type_id, iban, issue_nb, quantity from items;");
 
         while (rs.next()) {

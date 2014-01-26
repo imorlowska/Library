@@ -32,7 +32,7 @@ public class GenresList {
 
     public void load(Connect connect) throws SQLException {
         genres.clear();
-        ResultSet rs = connect.execute("select id, name from genres;");
+        ResultSet rs = connect.executeQuery("select id, name from genres;");
 
         while (rs.next()) {
             Genre p = new Genre();

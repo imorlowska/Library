@@ -26,12 +26,20 @@ public class Connect {
                        "jdbc:mysql://localhost/mo",
                        "root",
                        "password");
+             koneksi.setAutoCommit(false);
          }
          return koneksi;
      }  
      
-     public ResultSet execute(String command)throws SQLException{
+     public ResultSet executeQuery(String command)throws SQLException{
         Statement statement = makeConnection().createStatement();
         return statement.executeQuery(command);
     }
+     
+     public void executeInsert(String command) throws SQLException, InterruptedException {
+         Statement statement = makeConnection().createStatement();
+         statement.executeUpdate(command);
+         Thread.sleep(1000);
+         statement.close();
+     }
 }
