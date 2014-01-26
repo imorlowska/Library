@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class OrdersList {
 
-    private List<Order> orders;
+    List<Order> orders;
 
     public OrdersList() {
         this.orders = new ArrayList();

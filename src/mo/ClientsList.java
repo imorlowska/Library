@@ -16,7 +16,7 @@ import java.util.List;
  * @author Izabela
  */
 public class ClientsList {
-    private List<Client> clients;
+    public List<Client> clients;
     
     public ClientsList() {
         this.clients = new ArrayList();

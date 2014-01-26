@@ -16,7 +16,7 @@ import java.util.List;
  * @author Izabela
  */
 public class AuthorsList {
-    private List<Author> authors;
+    List<Author> authors;
     
     public AuthorsList() {
         this.authors = new ArrayList();

@@ -16,7 +16,7 @@ import java.util.List;
  * @author Izabela
  */
 public class ItemsList {
-    private List<Item> items;
+    List<Item> items;
     
     public ItemsList() {
         items = new ArrayList();
