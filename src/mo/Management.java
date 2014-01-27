@@ -34,7 +34,6 @@ public class Management {
         clientsList.load(connect);
         ordersList = new OrdersList();
         ordersList.load(connect);
-        System.out.println("Loading complete.\n");
     }
 
     private static void clearScreen() {
@@ -74,7 +73,9 @@ public class Management {
                     + "10\t See orders list\n"
                     + "11\t Add new order\n"
                     + "12\t Finalize an order\n"
-                    + "13\t Exit\n");
+                    + "13\t Show items by genre\n"
+                    + "14\t Ban or unban user\n"
+                    + "15\t Exit\n");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             int i = Integer.parseInt(br.readLine());
             if (i == 1) {
@@ -102,10 +103,15 @@ public class Management {
             } else if (i == 12) {
                 finalizeOrder();
             } else if (i == 13) {
+                showItemsByGenre();
+            } else if (i == 14) {
+                changeBanned();
+            } else if (i == 15) {
                 break;
             } else {
                 System.out.println("Wrong command");
             }
+            load();
         }
     }
 
@@ -157,7 +163,7 @@ public class Management {
             System.out.println();
             System.out.println("Currently held items: ");
             List<Integer> items_ids = new ArrayList();
-            for (Order o : ordersList.orders) {
+            for (Order o : ordersList.findNotReturned()) {
                 if (o.client_id == found.id) {
                     items_ids.add(o.item_id);
                 }
@@ -237,7 +243,7 @@ public class Management {
             }
             System.out.println("Currently held by: ");
             List<Integer> client_ids = new ArrayList();
-            for (Order o : ordersList.orders) {
+            for (Order o : ordersList.findNotReturned()) {
                 if (o.item_id == it.id) {
                     client_ids.add(o.client_id);
                 }
@@ -395,10 +401,66 @@ public class Management {
         }
         if (o == null) {
             System.out.println("Cannot find order.");
-        } else if (o.return_date != null || o.return_date.equals("") || o.return_date.equals("null")) {
+        } else if (o.return_date != null) {
             System.out.println("Item already returned");
         } else {
             ordersList.returnItem(o, return_date, connect);
         }
+    }
+
+    private static void showItemsByGenre() throws IOException {
+        System.out.println("Available genres:");
+        for (Genre g : genresList.genres) {
+            System.out.println("ID: " + g.id + "\tName: " + g.name);
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Provide genre's id: ");
+        int genre_id = Integer.parseInt(br.readLine());
+        System.out.println("Items for this genre:");
+        int i = 0;
+        for (Item it : itemsList.items) {
+            if (it.genre_id == genre_id) {
+                System.out.println(it.name);
+                ++i;
+            }
+        }
+        if (i == 0) {
+            System.out.println("No items for genre with this id");
+        }
+        System.out.println();
+    }
+
+    private static void changeBanned() throws IOException, SQLException, InterruptedException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Provide client's id: ");
+        int user_id = Integer.parseInt(br.readLine());
+        Client c = null;
+        for (Client cl : clientsList.clients) {
+            if (cl.id == user_id) {
+                c = cl;
+            }
+        }
+        if (c != null) {
+            if (c.banned) {
+                System.out.println("Client is currently banned.\n1 - Unban\n2 - Cancel");
+                int ban = Integer.parseInt(br.readLine());
+                if (ban == 1) {
+                    clientsList.changeBanned(c, connect);
+                } else {
+                    System.out.println("Cancelled");
+                }
+            } else {
+                System.out.println("Client is currently not banned.\n1 - Ban\n2 - Cancel");
+                int ban = Integer.parseInt(br.readLine());
+                if (ban == 1) {
+                    clientsList.changeBanned(c, connect);
+                } else {
+                    System.out.println("Cancelled");
+                }
+            }
+        } else {
+            System.out.println("Cannot find client with specidied id");
+        }
+        System.out.println();
     }
 }

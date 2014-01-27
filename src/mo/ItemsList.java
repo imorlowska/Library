@@ -149,6 +149,6 @@ public class ItemsList {
                 items.add(m);
             }
         }
-        System.out.println("Loaded " + items.size() + " item(s)");
+        //System.out.println("Loaded " + items.size() + " item(s)");
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * @author Izabela
  */
 public class GenresList {
-    private List<Genre> genres;
+    List<Genre> genres;
 
     public GenresList() {
         genres = new ArrayList();
@@ -40,6 +40,6 @@ public class GenresList {
             p.name = rs.getString(2);
             genres.add(p);
         }
-        System.out.println("Loaded " + genres.size() + " genre(s)");
+        //System.out.println("Loaded " + genres.size() + " genre(s)");
     }
 }

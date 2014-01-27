@@ -67,6 +67,6 @@ public class AuthorsList {
             a.nickname = rs.getString(4);
             authors.add(a);
         }
-        System.out.println("Loaded " + authors.size() + " authors(s)");
+        //System.out.println("Loaded " + authors.size() + " authors(s)");
     }
 }

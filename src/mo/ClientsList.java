@@ -55,6 +55,25 @@ public class ClientsList {
         }
     }
     
+    public void changeBanned(Client c, Connect connect) 
+            throws SQLException, InterruptedException {
+        connect.executeUpdate("update clients set banned = " + (c.banned? "false":"true") + " where id = '"
+                + c.id + "';");
+        
+        ResultSet rs = connect.executeQuery("select id, banned from clients where id = '" + c.id + "';");
+        boolean succ = false;
+        while(rs.next()) {
+            if (rs.getInt(1) == c.id && rs.getBoolean(2) == !c.banned) {
+                c.banned = !c.banned;
+                succ = true;
+                System.out.println("Successfully " + (c.banned?"":"un") + "banned user");
+            }
+        }
+        if (!succ) {
+            System.out.println("Failed to ban/unban client");
+        }
+    }
+  
     public void load(Connect connect) throws SQLException {
         clients.clear();
         ResultSet rs = connect.executeQuery("select id, name, surname, email, banned from clients;");
@@ -68,6 +87,6 @@ public class ClientsList {
             a.banned = rs.getBoolean(5);
             clients.add(a);
         }
-        System.out.println("Loaded " + clients.size() + " clients(s)");
+        //System.out.println("Loaded " + clients.size() + " clients(s)");
     }
 }
